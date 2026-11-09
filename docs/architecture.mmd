@@ -1,0 +1,14 @@
+flowchart TD
+    Browser[Local browser UI] -->|HTTP JSON / multipart| API[FastAPI v1]
+    API --> Auth[Optional shared bearer key]
+    API --> Router[Deterministic tool router]
+    Router --> RAG[SQLite FTS5 retrieval]
+    API --> NLP[Lexicon and regex analysis]
+    API --> CSV[Pandas CSV profiling]
+    API --> Forecast[Chronological baseline forecast]
+    API --> Vision[Pillow image diagnostics]
+    RAG --> DB[(Local SQLite workspace)]
+    API --> Activity[Metadata-only activity log]
+    RAG -. explicit opt-in only .-> LLM[OpenAI-compatible endpoint]
+    Vision -. explicit opt-in only .-> LLM
+    API --> Static[Static HTML / CSS / JS]

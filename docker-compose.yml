@@ -1,0 +1,18 @@
+services:
+  skyle-ai:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      SKYLE_DATA_DIR: /var/lib/skyle
+      SKYLE_API_KEY: ${SKYLE_API_KEY:-}
+      SKYLE_LLM_ENABLED: ${SKYLE_LLM_ENABLED:-false}
+      SKYLE_LLM_BASE_URL: ${SKYLE_LLM_BASE_URL:-}
+      SKYLE_LLM_API_KEY: ${SKYLE_LLM_API_KEY:-}
+      SKYLE_LLM_MODEL: ${SKYLE_LLM_MODEL:-}
+    volumes:
+      - skyle_data:/var/lib/skyle
+    restart: unless-stopped
+
+volumes:
+  skyle_data:

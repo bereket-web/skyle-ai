@@ -1,0 +1,32 @@
+{
+  "recorded_at": "2026-11-03T18:58:08+03:00",
+  "environment": "local Uvicorn bound to 127.0.0.1:8934",
+  "data_mode": "original fictional demo documents and generated CSV/image fixtures only",
+  "external_llm_enabled": false,
+  "automated_quality_gate": {
+    "pytest": "22 passed; 1 upstream Starlette/httpx TestClient deprecation warning",
+    "ruff": "passed",
+    "ruff_format": "passed",
+    "python_compile": "passed",
+    "javascript_syntax": "passed",
+    "wheel": "built",
+    "source_distribution": "built"
+  },
+  "checks": {
+    "health": {"http_status": 200, "service_status": "ok", "version": "0.1.0"},
+    "ui": {"html_http_status": 200, "title_present": true, "css_http_status": 200, "javascript_http_status": 200},
+    "demo_index": {"documents": 2, "chunks": 3},
+    "retrieval": {"mode": "extractive", "top_source": "skyle_workspace.md", "citation_ids": ["S1", "S2", "S3"]},
+    "agent_router": {"route": "text_analysis", "mode": "heuristic"},
+    "text_analysis": {"fixture_sentiment": "positive", "token_count": 7},
+    "csv_profile": {"fixture_rows": 3, "fixture_columns": 3},
+    "forecast": {"fixture_observations": 18, "holdout_selected_model": "linear_trend", "forecast_steps": 3},
+    "vision": {"fixture_dimensions": [16, 12], "semantic_description": null, "external_model_used": false},
+    "activity": {"events_returned": 7, "minimum_recorded_duration_ms": 1}
+  },
+  "limits": [
+    "This is a software smoke test, not a retrieval, language, forecast or vision quality benchmark.",
+    "The remote LLM and semantic-vision paths were not enabled or live-tested.",
+    "No hosted deployment or Docker build was tested."
+  ]
+}

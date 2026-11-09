@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.7"
+          python-version: ${{ matrix.python-version }}
+      - run: uv sync --locked --extra test
+      - run: uv lock --check
+      - run: uv run ruff check src tests
+      - run: uv run ruff format --check src tests
+      - name: Test with isolated SQLite state
+        run: uv run pytest
+        env:
+          SKYLE_DATA_DIR: ${{ runner.temp }}/skyle-${{ matrix.python-version }}-ci
+      - run: uv run python -m compileall -q src tests
+      - run: node --check src/skyle_ai/static/app.js
+      - run: uv build
